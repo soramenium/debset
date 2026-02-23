@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
+shopt -s nocasematch
 SCRIPT_DIR=$(pwd)
 
 # ---------------------------
@@ -17,6 +17,10 @@ fi
 
 declare -a EXECUTED_SECTIONS=()
 
+# ---------------------------
+# FUNKCJE SEKCJI
+# ---------------------------
+
 run_section() {
     local name="$1"
     shift
@@ -32,10 +36,6 @@ ask_yes_no() {
     [[ "$choice" == "y" || "$choice" == "Y" ]]
 }
 
-# ---------------------------
-# FUNKCJE SEKCJI
-# ---------------------------
-
 set_grub_param() {
     local param="$1"
     local value="$2"
@@ -45,6 +45,10 @@ set_grub_param() {
         echo "$param=$value" >> "$GRUB_FILE"
     fi
 }
+
+# ---------------------------
+# FUNKCJE SKRYPTU
+# ---------------------------
 
 install_packages() {
 
@@ -233,6 +237,21 @@ echo "Gotowe. Wyloguj użytkownika lub zrestartuj system."
 
 }
 
+update_debset() {
+    if [[ -f "main.zip" ]]; then
+        echo "Znaleziono main.zip — usuwam..."
+        rm -f main.zip
+    fi
+	echo "pobieram aktualny skrypt z GitHuba"
+    wget https://github.com/soramenium/debset/archive/refs/heads/main.zip || return 1
+	echo "wypakowuję archiwum"
+    unzip -o main.zip || return 1
+    cd debset-main || return 1
+	echo "nadaję uprawnienia wykonywalności"
+    chmod +x debset.sh || return 1
+	echo "skrypt zaktualizowany, uruchom go ponownie"
+}
+
 # ---------------------------
 # MENU
 # ---------------------------
@@ -249,6 +268,7 @@ show_menu() {
     echo "7 - Włączenie DE"
 	echo "8 - kioskifikacja"
     echo "0 - Wyjście"
+	echo "u - Update skryptu z GitHuba"
     echo "============================"
 }
 
@@ -282,6 +302,9 @@ while true; do
         7) run_section "Włącz DE" enable_de ;;
         8) run_section "Kioskifikuj" kioskify ;;
         0) break ;;
+		u)
+			run_section "Update skryptu..." update_debset
+			break ;;
         *) echo "Nieprawidłowa opcja." ;;
     esac
 done
