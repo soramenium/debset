@@ -252,6 +252,105 @@ update_debset() {
 	echo "skrypt zaktualizowany, uruchom go ponownie"
 }
 
+create_loop_test_file() {
+    local FILE_PATH="${1:-/home/automex/loopinator.sh}"
+
+    echo "Tworzenie pliku testowego: $FILE_PATH"
+
+    cat > "$FILE_PATH" <<'EOF'
+#!/bin/bash
+
+echo "Loopinator started at $(date)"
+echo "PID $$"
+echo "-------------------------"
+
+counter=0
+while true; do
+    counter=$((counter+1))
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Loop #$counter"
+    sleep 2
+done
+EOF
+
+    chmod +x "$FILE_PATH"
+
+    echo "Gotowe. Plik utworzony i oznaczony jako wykonywalny."
+}
+
+create_launch_script() {
+local FILE_PATH="${1:-/home/automex/lob.sh}"
+
+    echo "Tworzenie pliku testowego: $FILE_PATH"
+
+    cat > "$FILE_PATH" <<'EOF'
+#!/bin/bash
+cd /home/automex
+exec ./loopinator.sh
+EOF
+
+    chmod +x "$FILE_PATH"
+
+    echo "Gotowe. Plik utworzony i oznaczony jako wykonywalny."
+}
+
+
+setup_lob_service() {
+    local SERVICE_NAME="lob"
+    local SCRIPT_PATH="/home/automex/lob.sh"
+    local SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
+    local RUN_USER="automex"
+    local TTY_DEVICE="/dev/tty2"
+
+    echo "Creating systemd service at ${SERVICE_FILE}..."
+
+    sudo bash -c "cat > ${SERVICE_FILE}" <<EOF
+[Unit]
+Description=Launch On Boot - PARM on tty2
+After=multi-user.target
+
+[Service]
+User=${RUN_USER}
+WorkingDirectory=/home/${RUN_USER}
+ExecStart=${SCRIPT_PATH}
+
+StandardInput=tty
+StandardOutput=tty
+StandardError=tty
+TTYPath=${TTY_DEVICE}
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    echo "Reloading systemd..."
+    sudo systemctl daemon-reload
+
+    echo "Enabling service..."
+    sudo systemctl enable ${SERVICE_NAME}
+
+    echo "Starting service..."
+    sudo systemctl restart ${SERVICE_NAME}
+
+    echo "Done. Current status:"
+    sudo systemctl status ${SERVICE_NAME} --no-pager
+}
+
+setup_lob_test_service() {
+	echo "### tworzę skrypt z pętlą testową ###"
+	create_loop_test_file
+	echo "### tworzę skrypt uruchomieniowy ###"
+	create_launch_script
+	echo "### rejestruję serwis w systemie ###"
+	setup_lob_service
+	echo "### po restarcie TTY2 powinno lecieć w pętli z cyferkami ###"
+	echo "### aby zmienić uruchamiany program edytuj ~/lob.sh ###"
+}
+
 # ---------------------------
 # MENU
 # ---------------------------
@@ -267,6 +366,7 @@ show_menu() {
     echo "6 - Wyłączenie DE"
     echo "7 - Włączenie DE"
 	echo "8 - kioskifikacja"
+	echo "9 - Stwórz Launch On Boot"
     echo "0 - Wyjście"
 	echo "u - Update skryptu z GitHuba"
     echo "============================"
@@ -301,6 +401,7 @@ while true; do
         6) run_section "Wyłączenie DE" disable_de ;;
         7) run_section "Włącz DE" enable_de ;;
         8) run_section "Kioskifikuj" kioskify ;;
+		9) run_section "LOB" setup_lob_test_service ;;
         0) break ;;
 		u)
 			run_section "Update skryptu..." update_debset
