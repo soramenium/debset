@@ -70,6 +70,8 @@
     - wyłącza usypianie komputera
     - zmienia funkcje Power Buttona, żeby nic nie robił (not working, need fix)
 
+## Update debset
+  automatycznie pobierze z githuba i zainstaluje najnowszą wersję skryptu, po czym zakończy działanie aktualnie uruchomionego skryptu
 
 ## Wyjście
   wychodzi ze skryptu :v
