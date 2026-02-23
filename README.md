@@ -70,6 +70,10 @@
     - wyłącza usypianie komputera
     - zmienia funkcje Power Buttona, żeby nic nie robił (not working, need fix)
 
+## Stwórz Launch On Boot
+  Tworzy skrypt uruchomieniowy lob.sh w katalogu domowym oraz serwis który ten skrypt będzie wywoływać.
+  Docelowo będzie usetapiać auto uruchomienie parma, ale obecnie będzie odpalać pętlę testową (również tworzona automatycznie przez tę funkcję)
+  
 ## Update debset
   automatycznie pobierze z githuba i zainstaluje najnowszą wersję skryptu, po czym zakończy działanie aktualnie uruchomionego skryptu
 
