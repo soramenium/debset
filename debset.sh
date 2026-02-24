@@ -58,6 +58,18 @@ install_packages() {
         libsocketcan2
         libsocketcan-dev
         dconf-cli
+		net-tools
+		mc
+		htop
+		can-utils
+		nmap
+		tmux
+		make
+		gcc
+		g++
+		cmake
+		tio
+		cmatrix
     )
 
     MISSING_PACKAGES=()
