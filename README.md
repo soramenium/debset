@@ -32,6 +32,18 @@
      - libsocketcan2
      - libsocketcan-dev
      - dconf-cli
+		 - net-tools
+		 - mc
+		 - htop
+		 - can-utils
+		 - nmap
+		 - tmux
+		 - make
+		 - gcc
+		 - g++
+		 - cmake
+		 - tio
+		 - cmatrix
 
 ## Konfiguracja GRUB
   - ustawi naszą tapetę jako tło gruba
