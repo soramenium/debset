@@ -27,7 +27,7 @@ run_section() {
     echo
     echo "===== $name ====="
     local result
-    result=$("$@")
+    result=$("$@" | tail -n1)
 
     if [[ -n "$result" ]]; then
         EXECUTED_SECTIONS+=("$name ($result)")
