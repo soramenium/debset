@@ -182,6 +182,16 @@ enable_de() {
 	echo "zmieniono domyślny tryb terminala na graficzny"
 }
 
+toggle_de(){
+	if ask_yes_no "Czy DE ma być włączone? Y-włącza DE N-wyłącza DE"; then 
+		echo "Włączam DE~!"
+		enable_de()
+	else
+		echo "Wyłączam DE~!"
+		disable_de()
+	fi
+}
+
 # kioskify() {
 
     # DEST_WALLPAPER="/home/automex/Pictures/tapeta_automex.png"
@@ -410,8 +420,8 @@ while true; do
         3) run_section "Konfiguracja GRUB" configure_grub ;;
         4) run_section "Autologowanie" configure_autologin ;;
         5) run_section "Konfiguracja SSH" configure_ssh ;;
-        6) run_section "Wyłączenie DE" disable_de ;;
-        7) run_section "Włącz DE" enable_de ;;
+        6) run_section "Wyłączenie DE" toggle_de ;;
+        7)  ;;
         8) run_section "Kioskifikuj" kioskify ;;
 		9) run_section "LOB" setup_lob_test_service ;;
         0) break ;;
