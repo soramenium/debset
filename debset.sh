@@ -385,8 +385,8 @@ show_menu() {
     echo "3 - Konfiguracja GRUB"
     echo "4 - Autologowanie"
     echo "5 - Konfiguracja SSH"
-    echo "6 - Wyłączenie DE"
-    echo "7 - Włączenie DE"
+    echo "6 - Włącz lub wyłącz DE"
+    echo "7 - (brak funkcji)"
 	echo "8 - kioskifikacja"
 	echo "9 - Stwórz Launch On Boot"
     echo "0 - Wyjście"
@@ -420,7 +420,7 @@ while true; do
         3) run_section "Konfiguracja GRUB" configure_grub ;;
         4) run_section "Autologowanie" configure_autologin ;;
         5) run_section "Konfiguracja SSH" configure_ssh ;;
-        6) run_section "Wyłączenie DE" toggle_de ;;
+        6) run_section "ON/OFF DE" toggle_de ;;
         7)  ;;
         8) run_section "Kioskifikuj" kioskify ;;
 		9) run_section "LOB" setup_lob_test_service ;;
