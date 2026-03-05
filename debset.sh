@@ -382,7 +382,7 @@ setup_lob_test_service() {
 }
 
 obfuscate_terminal() {
-	;;
+	break
 }
 
 
