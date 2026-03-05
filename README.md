@@ -1,12 +1,15 @@
 # Instrukcja uruchomienia:
-1. wget https://github.com/soramenium/debset/archive/refs/heads/main.zip
-2. unzip main.zip
-3. cd debset-main
-4. chmod +x debset.sh
-5. SU
-6. (wpisz root-pwd)
-7. ./debset.sh
-8. baw się dobrze
+
+	wget https://github.com/soramenium/debset/archive/refs/heads/main.zip
+	unzip main.zip
+	chmod +x ./debset-main/debset.sh
+	
+pamiętaj że skrypt trzeba odpalić jako root
+	
+	SU
+	(wpisz root-pwd)
+	./debset.sh
+baw się dobrze
 
 # Opis funkcji
   ## "Wykonaj wszystko"
@@ -23,6 +26,8 @@
     - Konfiguracja SSH
     - Kioskifikuj
     - Wyłącz DE
+	- Matrixify
+	- LOB
   
 ## Instalacja pakietów
   Automatycznie zainstaluje (jeśli nie ma) poniższe pakiety:
@@ -68,11 +73,12 @@
   
 
   
-## Wyłączenie DE
-  sprawia, że system domyślnie odpala się w trybie CLI
+## ON/OFF DE
+  Włącza lub wyłącza GUI
 
-## Włączenie DE
-  sprawia, ze system domyślnie odpala się w trybie GUI
+## Matrixify
+Obfuskacja terminala - każdy terminal, SSH itp (oprócz SU/SUDO/ROOT) domyślnie odpala cmatrix w ramach obfuskacji.
+[q] lub [ctrl]+[c] żeby powrócić do normalnego terminala
 
 ## kioskifikacja
   Zmienia ustawienia DE:
