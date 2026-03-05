@@ -231,7 +231,7 @@ DCONF_DIR="/etc/dconf/db/local.d"
 
     # Tapeta – tylko jeśli nie istnieje
     if [ ! -f "$WALLPAPER_PATH" ]; then
-        cp ./tapeta_automex.png "$WALLPAPER_PATH"
+        cp ./debset-main/tapeta_automex.png "$WALLPAPER_PATH"
 		echo "skopiowano tapetę do ścieżki systemowej"
     fi
 echo "Konfiguracja profilu dconf..."
