@@ -26,8 +26,14 @@ run_section() {
     shift
     echo
     echo "===== $name ====="
-    "$@"
-    EXECUTED_SECTIONS+=("$name")
+    local result
+    result=$("$@")
+
+    if [[ -n "$result" ]]; then
+        EXECUTED_SECTIONS+=("$name ($result)")
+    else
+        EXECUTED_SECTIONS+=("$name")
+    fi
 }
 
 ask_yes_no() {
@@ -186,9 +192,11 @@ toggle_de(){
 	if ask_yes_no "Czy DE ma być włączone? Y-włącza DE N-wyłącza DE"; then 
 		echo "Włączam DE~!"
 		enable_de
+		echo "enabled"
 	else
 		echo "Wyłączam DE~!"
 		disable_de
+		echo "disabled"
 	fi
 }
 
@@ -373,6 +381,12 @@ setup_lob_test_service() {
 	echo "### aby zmienić uruchamiany program edytuj ~/lob.sh ###"
 }
 
+obfuscate_terminal() {
+	
+}
+
+
+
 # ---------------------------
 # MENU
 # ---------------------------
@@ -421,7 +435,7 @@ while true; do
         4) run_section "Autologowanie" configure_autologin ;;
         5) run_section "Konfiguracja SSH" configure_ssh ;;
         6) run_section "ON/OFF DE" toggle_de ;;
-        7)  ;;
+        7) run_section "Break into the mainframe" obfuscate_terminal ;;
         8) run_section "Kioskifikuj" kioskify ;;
 		9) run_section "LOB" setup_lob_test_service ;;
         0) break ;;
