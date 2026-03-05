@@ -382,7 +382,7 @@ setup_lob_test_service() {
 }
 
 obfuscate_terminal() {
-	
+	;;
 }
 
 
@@ -400,7 +400,7 @@ show_menu() {
     echo "4 - Autologowanie"
     echo "5 - Konfiguracja SSH"
     echo "6 - Włącz lub wyłącz DE"
-    echo "7 - (brak funkcji)"
+    echo "7 - zhakuj mainframe (obfuskacja terminala)"
 	echo "8 - kioskifikacja"
 	echo "9 - Stwórz Launch On Boot"
     echo "0 - Wyjście"
@@ -435,7 +435,7 @@ while true; do
         4) run_section "Autologowanie" configure_autologin ;;
         5) run_section "Konfiguracja SSH" configure_ssh ;;
         6) run_section "ON/OFF DE" toggle_de ;;
-        7) run_section "Break into the mainframe" obfuscate_terminal ;;
+        7) run_section "Matrixify" obfuscate_terminal ;;
         8) run_section "Kioskifikuj" kioskify ;;
 		9) run_section "LOB" setup_lob_test_service ;;
         0) break ;;
