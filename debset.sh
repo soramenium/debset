@@ -185,10 +185,10 @@ enable_de() {
 toggle_de(){
 	if ask_yes_no "Czy DE ma być włączone? Y-włącza DE N-wyłącza DE"; then 
 		echo "Włączam DE~!"
-		enable_de()
+		enable_de
 	else
 		echo "Wyłączam DE~!"
-		disable_de()
+		disable_de
 	fi
 }
 
