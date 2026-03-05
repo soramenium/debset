@@ -382,7 +382,22 @@ setup_lob_test_service() {
 }
 
 obfuscate_terminal() {
-	break
+	local target="/etc/bash.bashrc"
+
+    local block='
+# --- cmatrix login hook ---
+if [[ $- == *i* ]] && ! ps -o comm= -p $PPID | grep -qE '\''su|sudo'\''; then
+    cmatrix
+fi
+# --- end cmatrix login hook ---
+'
+
+    if ! grep -q "cmatrix login hook" "$target"; then
+        echo "Dodawanie cmatrix hook do $target"
+        echo "$block" | sudo tee -a "$target" > /dev/null
+    else
+        echo "Hook już istnieje w $target"
+    fi
 }
 
 
