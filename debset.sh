@@ -3,7 +3,7 @@ set -euo pipefail
 shopt -s nocasematch
 SCRIPT_DIR=$(pwd)
 
-source ./network_functions.sh
+source ./switch_ip.sh
 
 # ---------------------------
 # ROOT CHECK
