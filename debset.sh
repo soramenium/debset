@@ -404,9 +404,16 @@ switch_ip() {
     if [ -z "$iface" ]; then
         echo "Nie znaleziono interfejsu enp*"
         return 1
+	elif
+		echo "wykryto interfejs: $iface"
     fi
 
-    local mode=$1
+    local mode=${1:-}
+
+    if [[ -z $mode ]]; then
+        echo "Usage: switch_ip dhcp | static IP MASK GW"
+        return 1
+    fi
 
     if [ "$mode" == "dhcp" ]; then
         echo "Przełączanie $iface na DHCP..."
