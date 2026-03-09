@@ -403,10 +403,10 @@ switch_ip() {
 
     if [ -z "$iface" ]; then
         echo "Nie znaleziono interfejsu enp*"
-        return 1 ;;
-	elif
-		echo "wykryto interfejs: $iface" ;;
+        return 1 
     fi
+	
+	echo "wykryto interfejs: $iface" 
 
     local mode=${1:-}
 
