@@ -3,7 +3,7 @@ set -euo pipefail
 shopt -s nocasematch
 SCRIPT_DIR=$(pwd)
 
-source ./switch_ip.sh
+source ./debset-main/switch_ip.sh
 
 # ---------------------------
 # ROOT CHECK
@@ -432,7 +432,7 @@ switch_ip() {
             ;;
     esac
 }
-}
+
 
 
 # ---------------------------
