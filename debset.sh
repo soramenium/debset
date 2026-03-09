@@ -3,6 +3,8 @@ set -euo pipefail
 shopt -s nocasematch
 SCRIPT_DIR=$(pwd)
 
+source ./network_functions.sh
+
 # ---------------------------
 # ROOT CHECK
 # ---------------------------
@@ -400,6 +402,37 @@ fi
     fi
 }
 
+switch_ip() {
+	local script="$1"
+
+    if [[ ! -x "$script" ]]; then
+        echo "Błąd: skrypt $script nie istnieje lub nie jest wykonywalny."
+        return 1
+    fi
+
+    echo "Wybierz tryb sieci:"
+    echo "1) DHCP"
+    echo "2) Static IP"
+    read -rp "Twój wybór [1-2]: " choice
+
+    case "$choice" in
+        1)
+            "$script" dhcp
+            ;;
+        2)
+            read -rp "IP address: " ip
+            read -rp "Maska (CIDR np. 24): " mask
+            read -rp "Gateway: " gw
+
+            "$script" static "$ip" "$mask" "$gw"
+            ;;
+        *)
+            echo "Nieprawidłowy wybór."
+            return 1
+            ;;
+    esac
+}
+}
 
 
 # ---------------------------
@@ -409,7 +442,7 @@ fi
 show_menu() {
     echo
     echo "=========== MENU ==========="
-    echo "1 - Wykonaj wszystko"
+    echo "1 - Wykonaj wszystko (2-9)"
     echo "2 - Instalacja pakietów"
     echo "3 - Konfiguracja GRUB"
     echo "4 - Autologowanie"
@@ -418,8 +451,9 @@ show_menu() {
     echo "7 - zhakuj mainframe (obfuskacja terminala)"
 	echo "8 - kioskifikacja"
 	echo "9 - Stwórz Launch On Boot"
-    echo "0 - Wyjście"
+	echo "n - konfiguracja statycznego IP/DHCP"
 	echo "u - Update skryptu z GitHuba"
+    echo "q - Wyjście"
     echo "============================"
 }
 
@@ -455,7 +489,8 @@ while true; do
         7) run_section "Matrixify" obfuscate_terminal ;;
         8) run_section "Kioskifikuj" kioskify ;;
 		9) run_section "LOB" setup_lob_test_service ;;
-        0) break ;;
+        q) break ;;
+		n) run_section "DHCP/Static IP config" switch_ip ;;
 		u)
 			run_section "Update skryptu..." update_debset
 			break ;;
