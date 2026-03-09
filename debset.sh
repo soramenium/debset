@@ -28,14 +28,8 @@ run_section() {
     shift
     echo
     echo "===== $name ====="
-    local result
-    result=$("$@" | tail -n1)
-
-    if [[ -n "$result" ]]; then
-        EXECUTED_SECTIONS+=("$name ($result)")
-    else
-        EXECUTED_SECTIONS+=("$name")
-    fi
+    "$@"
+    EXECUTED_SECTIONS+=("$name")
 }
 
 ask_yes_no() {
