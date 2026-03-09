@@ -397,7 +397,7 @@ fi
 }
 
 switch_ip() {
-	local script=./debset-main/switch_ip.sh
+	local script=./switch_ip.sh
 
     if [[ ! -x "$script" ]]; then
         echo "Błąd: skrypt $script nie istnieje lub nie jest wykonywalny."
