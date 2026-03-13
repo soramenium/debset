@@ -3,6 +3,8 @@ set -euo pipefail
 shopt -s nocasematch
 SCRIPT_DIR=$(pwd)
 
+source ./debset-main/switch_ip.sh
+
 # ---------------------------
 # ROOT CHECK
 # ---------------------------
@@ -560,9 +562,10 @@ run_all() {
     run_section "Autologowanie" configure_autologin
     run_section "Konfiguracja SSH" configure_ssh
 	run_section "Kioskifikuj" kioskify
-	run_section "Wyłącz DE" disable_de
 	run_section "Matrixify" obfuscate_terminal
 	run_section "LOB" setup_lob_test_service
+	run_section "Wyłącz DE" disable_de
+	sudo reboot
 }
 
 # ---------------------------
