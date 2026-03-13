@@ -396,6 +396,7 @@ fi
     fi
 }
 
+### VVV DEPRECATED FUNKCJE SIECIOWE VVV
 switch_ip() {
     # Znajdź pierwszy aktywny interfejs fizyczny (pomijamy lo)
     local iface
@@ -466,7 +467,71 @@ switch_ip_wrapper() {
             ;;
     esac
 }
+### ^^^ DEPRECATED FUNKCJE SIECIOWE ^^^
 
+### VVV AKTUALNIE UŻYWANE FUNKCJE SIECIOWE VVV
+profile_exists() {
+    nmcli -t -f NAME connection show | grep -qx "$1"
+}
+
+netprofilswitcher() {
+	local iface
+    iface=$(ip -o link show | awk -F': ' '/enp/ {print $2; exit}')
+
+    if [ -z "$iface" ]; then
+        echo "Nie znaleziono interfejsu enp*"
+        return 1 
+    fi
+	
+	echo "wykryto interfejs: $iface" 
+
+	# DHCP
+	if profile_exists "dhcp"; then
+		echo "Profil DHCP już istnieje"
+	else
+		echo "Tworzę profil DHCP"
+		nmcli con add type ethernet ifname "$iface" con-name dhcp ipv4.method auto
+	fi
+	
+	# STATIC
+	if profile_exists "static"; then
+		echo "Profil STATIC już istnieje"
+	else
+		echo "Tworzę profil STATIC"
+		read -rp "IP address: " ip
+		read -rp "Gateway: " gw
+		read -rp "DNS: " dns
+		nmcli con add type ethernet ifname "$iface" con-name static \
+			ipv4.method manual \
+			ipv4.addresses "$ip" \
+			ipv4.gateway "$gw" \
+			ipv4.dns "$dns"
+	fi
+	
+	echo "Wybierz tryb sieci:"
+    echo "1) DHCP"
+    echo "2) Static IP"
+	echo "0) usuń profile"
+    read -rp "Twój wybór: " choice
+
+    case "$choice" in
+        1)
+            nmcli con up dhcp
+            ;;
+        2)
+            nmcli con up static
+            ;;
+        0)
+			nmcli connection delete dhcp
+			nmcli connection delete static
+			echo "usunięto profile, ponowne wejście w funkcję konfiguracji sieci utworzy je ponownie"
+			;;
+		*)
+            echo "Nieprawidłowy wybór."
+            return 1
+            ;;
+}
+### ^^^ AKTUALNIE UŻYWANE FUNKCJE SIECIOWE ^^^
 
 
 # ---------------------------
@@ -524,7 +589,7 @@ while true; do
         8) run_section "Kioskifikuj" kioskify ;;
 		9) run_section "LOB" setup_lob_test_service ;;
         q) break ;;
-		n) run_section "DHCP/Static IP config" switch_ip_wrapper ;;
+		n) run_section "DHCP/Static IP config" netprofilswitcher ;;
 		u)
 			run_section "Update skryptu..." update_debset
 			break ;;
