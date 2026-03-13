@@ -417,8 +417,8 @@ switch_ip() {
 
     if [ "$mode" == "dhcp" ]; then
         echo "Przełączanie $iface na DHCP..."
-        sudo dhclient -r $iface
-        sudo dhclient $iface
+		ip addr flush dev $iface
+        ip addr add dhcp dev $iface
         echo "DHCP włączone na $iface."
 
     elif [ "$mode" == "static" ]; then
@@ -432,9 +432,9 @@ switch_ip() {
         fi
 
         echo "Ustawianie statycznego IP $ip na $iface..."
-        sudo ip addr flush dev $iface
-        sudo ip addr add $ip/$netmask dev $iface
-        sudo ip route add default via $gateway dev $iface
+        ip addr flush dev $iface
+        ip addr add $ip/$netmask dev $iface
+        ip route add default via $gateway dev $iface
         echo "Statyczne IP ustawione na $iface."
 
     else
