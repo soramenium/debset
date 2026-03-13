@@ -12,7 +12,7 @@ pamiętaj że skrypt trzeba odpalić jako root
 baw się dobrze
 
 # Opis funkcji
-  ## "Wykonaj wszystko"
+  ## 1. Wykonaj wszystko
   
   Skrypt automatycznie wykona poniższe funkcje.
   
@@ -29,7 +29,7 @@ baw się dobrze
 	- Matrixify
 	- LOB
   
-## Instalacja pakietów
+## 2. Instalacja pakietów
   Automatycznie zainstaluje (jeśli nie ma) poniższe pakiety:
   
      - linux-image-rt-amd64
@@ -50,13 +50,13 @@ baw się dobrze
 		 - tio
 		 - cmatrix
 
-## Konfiguracja GRUB
+## 3. Konfiguracja GRUB
   - ustawi naszą tapetę jako tło gruba
   - ustawi jądro RT jako domyślne
   - wyłączy oczekiwanie na wybór użytkownika
 
 
-## Autologowanie
+## 4. Autologowanie
   Powinno sprawić że przy uruchomieniu systemu w trybie z GUI, automex zaloguje się automatycznie.
   
   Powinno.
@@ -64,23 +64,23 @@ baw się dobrze
   Bo w sumie to zapomniałem to przetestować XD
     
   
-## Konfiguracja SSH
+## 5. Konfiguracja SSH
   zmienia port z domyślnego 22 na 2222, tak żeby trudniej było hakować nasze mejnfrejmy XD
   
-  **UWAGA** po wykonaniu tej funkcji może rozłączyć SSH
+  **UWAGA** po wykonaniu tej połączenie SSH zostanie zerwane
   
   **UWAGA** ponowne połączenie wymaga dodania flagi '-P 2222'
   
 
   
-## ON/OFF DE
+## 6. Włącz/wyłącz DE
   Włącza lub wyłącza GUI
 
-## Matrixify
+## 7. Zhakuj mainfame (obfuskacja terminala)
 Obfuskacja terminala - każdy terminal, SSH itp (oprócz SU/SUDO/ROOT) domyślnie odpala cmatrix w ramach obfuskacji.
 [q] lub [ctrl]+[c] żeby powrócić do normalnego terminala
 
-## kioskifikacja
+## 8. Kioskifikacja
   Zmienia ustawienia DE:
   
     - ustawia naszą tapetę
@@ -88,12 +88,18 @@ Obfuskacja terminala - każdy terminal, SSH itp (oprócz SU/SUDO/ROOT) domyślni
     - wyłącza usypianie komputera
     - zmienia funkcje Power Buttona, żeby nic nie robił (not working, need fix)
 
-## Stwórz Launch On Boot
+## 9. Stwórz Launch On Boot
   Tworzy skrypt uruchomieniowy lob.sh w katalogu domowym oraz serwis który ten skrypt będzie wywoływać.
   Docelowo będzie usetapiać auto uruchomienie parma, ale obecnie będzie odpalać pętlę testową (również tworzona automatycznie przez tę funkcję)
   
-## Update debset
+## n. konfiguracja statycznego IP / DHCP
+Pozwala przełączać się między profilami sieciowymi. Jeśli profil nie istnieje to zostanie od razu utworzony.
+Żeby zmienić ustawienia statycznego IP należy usunąć profile i jeszcze raz wywołać właściwą funkcję.
+Domyślnie system powienien przełączyć się na DHCP po usunięciu profili.
+**UWAGA** Zmiana ustawień sieciowych spowoduje rozłączenie SSH
+
+## u. Update debset
   automatycznie pobierze z githuba i zainstaluje najnowszą wersję skryptu, po czym zakończy działanie aktualnie uruchomionego skryptu
 
 ## Wyjście
-  wychodzi ze skryptu :v
+  wychodzi ze skryptu, duuhhhh :v
