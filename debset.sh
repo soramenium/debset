@@ -508,6 +508,7 @@ netprofilswitcher() {
     echo "1) DHCP"
     echo "2) Static IP"
 	echo "0) usuń profile"
+	echo "b) cofnij do głównego menu"
     read -rp "Twój wybór: " choice
 
     case "$choice" in
@@ -521,6 +522,9 @@ netprofilswitcher() {
 			nmcli connection delete dhcp
 			nmcli connection delete static
 			echo "usunięto profile, ponowne wejście w funkcję konfiguracji sieci utworzy je ponownie"
+			;;
+		b)
+			
 			;;
 		*)
             echo "Nieprawidłowy wybór."
