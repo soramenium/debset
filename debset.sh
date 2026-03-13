@@ -520,7 +520,7 @@ netprofilswitcher() {
         0)
 			nmcli connection delete dhcp
 			nmcli connection delete static
-			echo "usunięto profile, ponowne wejście w funkcję konfiguracji sieci utworzy je ponownie"
+			echo "usunięto profile"
 			;;
 		b)
 			
