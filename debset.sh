@@ -524,7 +524,7 @@ while true; do
         8) run_section "Kioskifikuj" kioskify ;;
 		9) run_section "LOB" setup_lob_test_service ;;
         q) break ;;
-		n) run_section "DHCP/Static IP config" switch_ip ;;
+		n) run_section "DHCP/Static IP config" switch_ip_wrapper ;;
 		u)
 			run_section "Update skryptu..." update_debset
 			break ;;
