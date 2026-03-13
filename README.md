@@ -28,6 +28,7 @@ baw się dobrze
     - Wyłącz DE
 	- Matrixify
 	- LOB
+Na koniec zrobi reboot. 
   
 ## 2. Instalacja pakietów
   Automatycznie zainstaluje (jeśli nie ma) poniższe pakiety:
