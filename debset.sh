@@ -483,26 +483,7 @@ netprofilswitcher() {
         return 1 
     fi
 	
-	echo "wykryto interfejs: $iface" 
-
-	# DHCP
-	if profile_exists "dhcp"; then
-		echo "Profil DHCP już istnieje"
-	else
-		echo "Tworzę profil DHCP"
-		nmcli con add type ethernet ifname "$iface" con-name dhcp ipv4.method auto
-	fi
-	
-	# STATIC
-	if profile_exists "static"; then
-		echo "Profil STATIC już istnieje"
-	else
-		echo "Tworzę profil STATIC"
-		read -rp "IP address: " ip
-		read -rp "Gateway: " gw
-		read -rp "DNS: " dns
-		nmcli con add type ethernet ifname "$iface" con-name static ipv4.method manual ipv4.addresses "$ip" ipv4.gateway "$gw" ipv4.dns "$dns"
-	fi
+	echo "wykryto interfejs: $iface"
 	
 	echo "Wybierz tryb sieci:"
     echo "1) DHCP"
@@ -513,9 +494,27 @@ netprofilswitcher() {
 
     case "$choice" in
         1)
+			# DHCP
+			if profile_exists "dhcp"; then
+				echo "Profil DHCP już istnieje"
+			else
+				echo "Tworzę profil DHCP"
+				nmcli con add type ethernet ifname "$iface" con-name dhcp ipv4.method auto
+			fi
+			echo "Aktywuję profil DHCP"
             nmcli con up dhcp
             ;;
-        2)
+        2)			
+			# STATIC
+			if profile_exists "static"; then
+				echo "Profil STATIC już istnieje"
+			else
+				echo "Tworzę profil STATIC"
+				read -rp "IP address: " ip
+				read -rp "Gateway: " gw
+				read -rp "DNS: " dns
+				nmcli con add type ethernet ifname "$iface" con-name static ipv4.method manual ipv4.addresses "$ip" ipv4.gateway "$gw" ipv4.dns "$dns"
+			fi
             nmcli con up static
             ;;
         0)
