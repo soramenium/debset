@@ -3,8 +3,6 @@ set -euo pipefail
 shopt -s nocasematch
 SCRIPT_DIR=$(pwd)
 
-source ./debset-main/switch_ip.sh
-
 # ---------------------------
 # ROOT CHECK
 # ---------------------------
