@@ -451,7 +451,7 @@ switch_ip_wrapper() {
 
     case "$choice" in
         1)
-            "$script" dhcp
+            switch_ip dhcp
             ;;
         2)
             read -rp "IP address: " ip
