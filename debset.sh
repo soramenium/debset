@@ -70,6 +70,10 @@ install_packages() {
 		cmake
 		tio
 		cmatrix
+		pkg-config
+		git
+		gdb
+		putty
     )
 
     MISSING_PACKAGES=()
