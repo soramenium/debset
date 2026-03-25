@@ -50,6 +50,10 @@ Na koniec zrobi reboot.
 		 - cmake
 		 - tio
 		 - cmatrix
+		 - pkg-config
+		 - git
+		 - gdb
+		 - putty
 
 ## 3. Konfiguracja GRUB
   - ustawi naszą tapetę jako tło gruba
