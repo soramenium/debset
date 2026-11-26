@@ -312,9 +312,9 @@ local FILE_PATH="${1:-/home/automex/lob.sh}"
     echo "Tworzenie pliku testowego: $FILE_PATH"
 
     cat > "$FILE_PATH" <<'EOF'
-#!/bin/bash
-cd /home/automex
-exec ./loopinator.sh
+#!/bin/sh
+SOCK=/tmp/parm_tmux.sock
+exec /usr/bin/tmux -S "$SOCK" new-session -d -s parm '/usr/bin/sudo /usr/bin/chrt -f 80 /home/automex/run/ParmRT'
 EOF
 
     chmod +x "$FILE_PATH"
@@ -333,24 +333,20 @@ setup_lob_service() {
     echo "Creating systemd service at ${SERVICE_FILE}..."
 
     sudo bash -c "cat > ${SERVICE_FILE}" <<EOF
+# /etc/systemd/system/lob.service
+
 [Unit]
-Description=Launch On Boot - PARM on tty2
-After=multi-user.target
+Description=ParmRT in tmux
+After=network.target
 
 [Service]
-User=${RUN_USER}
-WorkingDirectory=/home/${RUN_USER}
-ExecStart=${SCRIPT_PATH}
-
-StandardInput=tty
-StandardOutput=tty
-StandardError=tty
-TTYPath=${TTY_DEVICE}
-TTYReset=yes
-TTYVHangup=yes
-TTYVTDisallocate=yes
-
+Type=forking
+User=automex
+Environment="HOME=/home/automex"
+Environment="TERM=screen"
+ExecStart=/home/automex/lob.sh
 Restart=always
+
 
 [Install]
 WantedBy=multi-user.target
